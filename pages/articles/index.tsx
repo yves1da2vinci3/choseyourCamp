@@ -7,11 +7,11 @@ import { MdOutlineCreate } from "react-icons/md"
 import {FcMenu} from 'react-icons/fc'
 import {AiOutlineMessage} from 'react-icons/ai'
 import {BsArrowDown, BsArrowUp, BsEyeFill, BsThreeDotsVertical} from 'react-icons/bs'
-import ArticleItem from '../components/ArticleItem'
+import ArticleItem from '../../components/ArticleItem'
 export default function UserHome() {
 const route = useRouter()
 const [active,setActive] = useState("Nouveau")
-const [activeSubject,setActiveSubject] = useState("Nouveau")
+const [activeSubject,setActiveSubject] = useState("web")
 const sidebar = [
 {
   title : "Nouveau"

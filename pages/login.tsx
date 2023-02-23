@@ -1,10 +1,11 @@
 import {FcGoogle} from 'react-icons/fc'
 import {FaGithub} from 'react-icons/fa'
+import Link from 'next/link'
 export default function Login() {
 
     return ( <div className="h-screen w-screen  items-center flex-col  justify-center flex" >
         <div className='flex items-center mb-5' > <h1 className='font-bold text-2xl' >ChoseYourCamp</h1><div className='h-2 w-2 self-end bg-blue-600 rounded-full' ></div>  </div>
-        <div className="h-[25rem] w-[30rem] flex shadow drop-shadow-md flex-col gap-y-4 bg-white rounded p-5" >
+        <div className="h-[27rem] w-[30rem] flex shadow drop-shadow-md flex-col gap-y-4 bg-white rounded p-5" >
             <div>
             <label htmlFor="email">Email ou UserName</label>
             <input id="email" className="h-[3rem] mt-1 rounded w-full p-2 bg-gray-100" placeholder="entrez votre email"  type="text" />
@@ -27,6 +28,7 @@ export default function Login() {
             </div>
             
          </div>
+         <p className='text-center'>pas encore enregistré ? <Link className='text-blue-400 cursor-pointer ' href="/signup" >s'enregistrer</Link></p>
         </div>
     </div>)   
 }

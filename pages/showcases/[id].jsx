@@ -2,14 +2,16 @@ import Image from "next/image";
 import { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
 import { FaImages, FaVideo } from "react-icons/fa";
-import ImageModals from '../../Modals/ImagesModals'
+import ImageModals from '../../components/ImagesModals'
+import VideoModal from '../../components/VideoModal'
 export default function SingleShowCase() {
     const [opened,setOpened] = useState(false)
+    const [videOpened,setVideOpened] = useState(false)
     return (
         <div className="h-screen w-screen  flex items-center flex-col  " >
       <ImageModals opened={opened} setOpened={setOpened} /> 
-
-            <div className="w-[50%]  p-3 flex-col flex-1" >
+       <VideoModal videOpened={videOpened} setVideOpened={setVideOpened} />
+            <div className="md:w-[50%] w-full  p-3 flex-col flex-1" >
             <div className="flex items-center cursor-pointer flex-row" >
                 <BsArrowLeft color="#616EA6" size={30} />
 <p className="text-[#616EA6] font-semibold text-2xl" >retour</p>
@@ -40,18 +42,18 @@ export default function SingleShowCase() {
 
         <p className='text-white font-semibold'>voir les photos</p>
       </div>
- <div onClick={()=> setSeeCommentModal(true)} className='h-[2.5rem] bg-black   cursor-pointer rounded-md w-[16rem] mt-1 gap-x-2 flex p-2 items-center justify-center' >
+ <div onClick={()=> setVideOpened(true)} className='h-[2.5rem] bg-black   cursor-pointer rounded-md w-[16rem] mt-1 gap-x-2 flex p-2 items-center justify-center' >
         <FaVideo size={20} color='white' />
 
-        <p className='text-white font-semibold'>voir video de presentation</p>
+        <p className='text-white texst-sm font-semibold'>voir une video </p>
       </div>
  </div>
 <p className="text-[#616EA6] text-2xl font-bold" >Source Code</p>
-<p className="text-[#616EA6] text-lg underline font-semibold" >https://github.com/yves1da2vinci3/whatsAppClone.git</p>
+<p className="text-[#616EA6] text-lg underline break-words font-semibold" >https://github.com/yves1da2vinci3/whatsAppClone.git</p>
 
             </div>
            
-
+           
         </div>
     )
 }

@@ -52,8 +52,7 @@ function ImagesModals({opened,setOpened}) {
         { 
         <div className='w-[38rem] h-[38rem] relative flex cursor-pointer  hover:brightness-50 group justify-center items-center' >
             <FaTrash size={20} className="group-hover:opacity-100 opacity-0 fill-current  text-white absolute" />
-            <div className='w-[38rem]   h-[38rem] relative' ></div>
-             <Image fill src={Images[CurrentElementIndex].url} alt="projectImg" />
+             <Image fill alt='images' src={Images[CurrentElementIndex].url} className="w-[38rem]   h-[38rem]" />
         </div>  
          
       }
@@ -66,9 +65,9 @@ function ImagesModals({opened,setOpened}) {
 <div className='h-[15%] border-2 w-full border-gray-200 flex gap-x-4 items-center pl-3' >
 {
 Images.map((img,index) => 
-<div key={img.url} onClick={()=> setCurrentElementIndex(index)  } className={`h-[5.5rem] w-[5.5rem] flex justify-center items-center p-2 hover:rounded-lg ${index === CurrentElementIndex ? "bg-gray-200 rounded-lg" : "" } hover:bg-gray-200 cursor-pointer  `} >
-  <div className="h-[5rem] w-[5rem] relative"  >
-    <Image alt='caption'  src={img?.url}   fill />  
+<div key={img.url} onClick={()=> setCurrentElementIndex(index)  } className={`h-[5.5rem] relative w-[5.5rem] flex justify-center items-center p-2 hover:rounded-lg ${index === CurrentElementIndex ? "bg-gray-200 rounded-lg" : "" } hover:bg-gray-200 cursor-pointer  `} >
+  <div className="h-[5rem] relative w-[5rem]" >
+    <Image   fill alt='captions' src={img?.url}   />  
     </div>
 </div>
 )
