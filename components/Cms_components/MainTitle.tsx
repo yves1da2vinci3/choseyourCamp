@@ -1,7 +1,7 @@
 import React,{FC} from 'react'
 
 interface  TextProps {
-    text : string
+    text? : string
 }
 
 
@@ -10,7 +10,7 @@ interface  TextProps {
 const MainTitle: FC<TextProps> = ({ text}) => {
     return (
       <>
-        <p className='text-4xl font-semibold font-serif tracking-tighter '>{text}</p>
+        <p contentEditable className='text-4xl outline-none font-semibold font-serif tracking-tighter '>{text ? text : "entrez votre titre"}</p>
       </>
     );
   };

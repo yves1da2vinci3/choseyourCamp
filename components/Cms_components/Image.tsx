@@ -10,10 +10,10 @@ interface ImageProps {
 const Image: FC<ImageProps> = ({ caption,imgUrl}) => {
   return (
     <div className='flex h-auto flex-col' >
-      <div className='h-[20rem] relative w-full' >
-        <Img  fill src={imgUrl} alt="image" />
+      <div className='min-h-[30rem] bg-red-100 relative w-[30rem]' >
+        <Img className='aspect-square ' fill src={imgUrl} alt="image" />
       </div>
-      <p className='text-md text-center mt-2 text-gray-500 tracking-tighter '>{caption ? caption : 'entrez une legende'}</p>
+      <p contentEditable className='text-md outline-none text-center mt-2 text-gray-500 tracking-tighter '>{caption ? caption : 'entrez une legende'}</p>
     </div>
   );
 };

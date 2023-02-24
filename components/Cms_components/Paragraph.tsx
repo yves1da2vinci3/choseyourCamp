@@ -20,7 +20,7 @@ interface TextProps {
 const Paragraph: FC<TextProps> = ({ text}) => {
   return (
     <>
-      <p className='text-md text-gray-500 tracking-tighter '>{text}</p>
+      <p contentEditable className='text-md outline-none text-gray-500 tracking-tighter '>{text ? text : "entrez votre paragraphe"}</p>
     </>
   );
 };

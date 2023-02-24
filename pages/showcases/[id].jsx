@@ -4,19 +4,20 @@ import { BsArrowLeft } from "react-icons/bs";
 import { FaImages, FaVideo } from "react-icons/fa";
 import ImageModals from '../../components/ImagesModals'
 import VideoModal from '../../components/VideoModal'
+import route from 'next/router'
 export default function SingleShowCase() {
     const [opened,setOpened] = useState(false)
     const [videOpened,setVideOpened] = useState(false)
+
     return (
         <div className="h-screen w-screen  flex items-center flex-col  " >
       <ImageModals opened={opened} setOpened={setOpened} /> 
        <VideoModal videOpened={videOpened} setVideOpened={setVideOpened} />
             <div className="md:w-[50%] w-full  p-3 flex-col flex-1" >
-            <div className="flex items-center cursor-pointer flex-row" >
-                <BsArrowLeft color="#616EA6" size={30} />
-<p className="text-[#616EA6] font-semibold text-2xl" >retour</p>
-
-            </div>
+            <div onClick={()=> route.back() } className="h-[2.8rem] w-[8rem] bg-[#D2D9F5] mb-2   rounded-md items-center gap-x-4 cursor-pointer mt-2 justify-center flex " >
+            <BsArrowLeft color="#616EA6" size={20} />
+            <p className="text-[#616EA6] font-semibold">retourner</p>
+        </div>
 
 
              {/* Image */}

@@ -4,6 +4,7 @@ import { EventHandler, useRef, useState } from 'react'
 import { BsArrowLeft, BsPlus } from 'react-icons/bs'
 import Image from 'next/image'
 import { MultiSelect, PasswordInput } from '@mantine/core'
+import { useRouter } from 'next/router'
 export default function Signup() {
        const [file,setFile] = useState(null)
        const fileHandler = (e : any) => { 
@@ -21,6 +22,9 @@ export default function Signup() {
         { value: 'next', label: 'Next.js' },
         { value: 'blitz', label: 'Blitz.js' },
       ];
+
+      const route = useRouter()
+      
     return ( <div className="h-screen w-screen  items-center flex-col  justify-center flex" >
         <div className='flex items-center mb-5' > <h1 className='font-bold text-2xl' >ChoseYourCamp</h1><div className='h-2 w-2 self-end bg-blue-600 rounded-full' ></div>  </div>
       {/* Main Container */}
@@ -61,7 +65,7 @@ export default function Signup() {
          </div>
          {/* Second Step */}
          <div className={`h-[35rem] w-[30rem] flex shadow drop-shadow-md flex-col gap-y-4  rounded p-5 absolute transition duration-[700ms] ease-in-out delay-[100ms]  ${stepStatus ===1 ? "translate-x-[30rem]" : "translate-x-[0rem]" } bg-white`}>
-         <div className="h-[2.8rem] w-[8rem] bg-[#D2D9F5]   rounded-md items-center gap-x-4 cursor-pointer mt-2 justify-center flex " >
+         <div onClick={()=> setstepStatus(1)} className="h-[2.8rem] w-[8rem] bg-[#D2D9F5]   rounded-md items-center gap-x-4 cursor-pointer mt-2 justify-center flex " >
             <BsArrowLeft color="#616EA6" size={20} />
             <p className="text-[#616EA6] font-semibold">retourner</p>
         </div>
@@ -80,7 +84,7 @@ export default function Signup() {
       label="Ton framework preferé"
       placeholder="Choisir tout ce que tu aimes"
     />
-            <button  onClick={()=> stepStatus ===1 ? setstepStatus(2) : setstepStatus(1) } type="button"  className="h-[2.8rem] bg-[#3C5AF0] hover:bg-blue-900 font-semibold rounded text-white " >{stepStatus ===1 ? "Continuer" : "s'enregistrer"}</button>
+            <button  onClick={()=> route.push("/articles")   } type="button"  className="h-[2.8rem] bg-[#3C5AF0] hover:bg-blue-900 font-semibold rounded text-white " >{stepStatus ===1 ? "Continuer" : "s'enregistrer"}</button>
          </div>
         </div>
     </div>)   

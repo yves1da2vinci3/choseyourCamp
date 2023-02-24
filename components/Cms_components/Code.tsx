@@ -13,7 +13,7 @@ const Code : FC<CodeProps> = ({codeString}) => {
     navigator.clipboard.writeText(codeString);
   }
   return (
-    <div className=' w-[80%] h-[8rem] bg-red-400 self-center relative flex-wrap overflow-clip break-words ' >
+    <div className=' w-[80%] h-[8rem]  self-center relative flex-wrap overflow-clip break-words ' >
       <span className="text-white absolute right-2 top-1 hover:cursor-pointer transition hover:scale-150">
         <MdOutlineContentCopy onClick={handleClick} />
       </span>

@@ -5,7 +5,7 @@ import {FcMenu} from 'react-icons/fc'
 import {BsHeart} from 'react-icons/bs'
 import {FaEye} from 'react-icons/fa'
 import ShowcaseItem from "../../components/ShowcaseItem";
-
+import Link from 'next/link'
 export default function Showcase() {
     const route = useRouter()
     return (
@@ -16,7 +16,7 @@ export default function Showcase() {
 {/* NavItems */}
 <div className=" w-[30rem] hidden md:flex h-full  items-center justify-between  " >
     <ul className="list-none flex gap-4">
-        <li className={` ${route.pathname.startsWith("/home") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`}>Articles</li>
+        <li className={` ${route.pathname.startsWith("/home") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`}><Link href="/articles" >Articles</Link></li>
         <li className={` ${route.pathname.startsWith("/showcases") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`} >ShowCase</li>
         <li className={` ${route.pathname.startsWith("/tutorials") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`} >Tutoriels</li>
         <li></li>

@@ -37,7 +37,9 @@ const Subjects = [
 
 ]
     return (
+      
         <div className="h-screen flex-1 " >
+         
             {/* NavBar */}
             <div className="h-[4rem] shadow bg-white flex px-2 flex-row  justify-between items-center" >
                 {/* Logo */}
@@ -45,8 +47,8 @@ const Subjects = [
 {/* NavItems */}
 <div className=" w-[30rem] hidden md:flex h-full  items-center justify-between  " >
     <ul className="list-none flex gap-4">
-        <li className={` ${route.pathname.startsWith("/home") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`}>Articles</li>
-        <li className={` ${route.pathname.startsWith("/showcase") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`} >ShowCase</li>
+        <li className={` ${route.pathname.startsWith("/articles") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`}><Link href="/articles" >Articles</Link></li>
+        <li className={` ${route.pathname.startsWith("/showcase") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`} >  <Link href="/showcases" >Showcases</Link> </li>
         <li className={` ${route.pathname.startsWith("/tutorials") ?  "text-blue-500 font-semibold" : 'text-black'} font-heading mr-9  cursor-pointer hover:text-blue-500 hover:font-semibold text-lg`} >Tutoriels</li>
         <li></li>
     </ul>
@@ -99,7 +101,7 @@ const Subjects = [
          
         </ul>
 
-        <div className="h-[3.3rem] w-[16rem] bg-blue-500 rounded-lg items-center gap-x-4 cursor-pointer mt-8 self-center justify-center flex " >
+        <div onClick={()=> route.push("/articles/create") } className="h-[3.3rem] w-[16rem] bg-blue-500 rounded-lg items-center gap-x-4 cursor-pointer mt-8 self-center justify-center flex " >
             <MdOutlineCreate size={20} color="white" />
             <p className="text-white font-semibold">creer un nouveau article</p>
         </div>
