@@ -12,8 +12,10 @@ import CmsImage from "@/components/Cms_components/Image"
 import Block from "@/components/Cms_components/Block"
 import Video from "@/components/Cms_components/Video"
 import Code from "@/components/Cms_components/Code"
+import Title from "@/components/Cms_components/Title"
 import MainTitle from "@/components/Cms_components/MainTitle"
 import MainSubitle from "@/components/Cms_components/MainSubTitle"
+import { FaTrash } from "react-icons/fa"
 export default function CreateArticle() {
     const [doc, setDoc] = useState<string>('# Hello, World!\n')
     const handleDocChange = useCallback((newDoc: string) => {
@@ -26,7 +28,7 @@ export default function CreateArticle() {
     const [images,setImages] = useState([])
     const [videos,setvideos] = useState([])
     const [droppableeIndex,setDroppableIndex] = useState(0)
-    const [contentResume,setContentResume] = useState(["Title","SubTitle"])
+    const [contentResume,setContentResume] = useState(["MainTitle","SubTitle"])
     const addParagraph = () => { 
       const oldContent =content;
       const newContent = [...oldContent,<Paragraph/>]
@@ -38,16 +40,29 @@ export default function CreateArticle() {
     const addTitle = () => { 
       const oldContent =content;
       const newContent = [...oldContent,<Title/>]
+      const oldContentResume = contentResume
+      const newContentResume = [...oldContentResume,"Title"]
+      setContentResume(newContentResume)
+
       setContent(newContent)
      }
 
-    const addImage = (e : any) => { 
+    const addMedia = (e : any) => { 
       const oldContent =content;
-      const newContent = [...oldContent,<CmsImage imgUrl={URL.createObjectURL(e.target.files[0])} />]
-      const oldContentResume = contentResume
-      const newContentResume = [...oldContentResume,"Image"]
-      setContentResume(newContentResume)
-      setContent(newContent)
+      if(e.target.files[0].type.startsWith("image/")){
+        const newContent = [...oldContent,<CmsImage imgUrl={URL.createObjectURL(e.target.files[0])} />]
+        const oldContentResume = contentResume
+        const newContentResume = [...oldContentResume,"Image"]
+        setContentResume(newContentResume)
+        setContent(newContent)
+      }else{
+        const newContent = [...oldContent,<Video videoUrl={URL.createObjectURL(e.target.files[0])} />]
+        const oldContentResume = contentResume
+        const newContentResume = [...oldContentResume,"Video"]
+        setContentResume(newContentResume)
+        setContent(newContent)
+      }
+    
      }
 
  const fileInput = useRef(null)
@@ -60,11 +75,25 @@ export default function CreateArticle() {
    setContentResume(newContentResume)
   setContent(newContent)
  }
+ const addCode = () => { 
+  const oldContent =content;
+  const newContent = [...oldContent,<Code  />]
+  // Update Resume Content
+  const oldContentResume = contentResume
+   const newContentResume = [...oldContentResume,"Code"]
+   setContentResume(newContentResume)
+  setContent(newContent)
+ }
+ 
 //  ContentResume object Variable
 const objectResume = {
-     Title : {
+     MainTitle : {
       Icon : <BiText color="white" size={20} />,
       title : "Titre principal"
+     },
+     Title : {
+      Icon : <BiText color="white" size={20} />,
+      title : "Titre "
      },
      SubTitle : {
       Icon :  <BiText color="white" size={20} />,
@@ -114,35 +143,60 @@ const onDragEnter = (event : any) => {
   }
 const  onDrop = (event : any) => {
   event.preventDefault();
+  let droppableIndex = 0;
+    if(event.target.getAttribute("data-index")){
+  console.log(event.target.getAttribute("data-index"))
 
+    droppableIndex = event.target.getAttribute("data-index")
+  }else{
+    // console.log(event.target.parentElement.getAttribute("data-index"))
+    droppableIndex = event.target.parentElement.getAttribute("data-index")
+    
+  }
   let draggableIndex = event.dataTransfer.getData("index");
   let copyContent = content
   let copyContentResume = contentResume
   console.log("before swap",content)
   const draggableElement = copyContent[draggableIndex]
-  const droppableElement  = copyContent[droppableeIndex]
+  const droppableElement  = copyContent[droppableIndex]
   //  Content Resume
   const draggableElementContentResume = copyContentResume[draggableIndex]
-  const droppableElementContentResume  = copyContentResume[droppableeIndex]
+  const droppableElementContentResume  = copyContentResume[droppableIndex]
   // Swap element
   copyContent[draggableIndex] = droppableElement
-  copyContent[droppableeIndex] = draggableElement
+  copyContent[droppableIndex] = draggableElement
   //  ContentResume
   copyContentResume[draggableIndex] = droppableElementContentResume
-  copyContentResume[droppableeIndex] = draggableElementContentResume
-   setContent(copyContent)
+  copyContentResume[droppableIndex] = draggableElementContentResume
+  //  setContent(()=>copyContent)
+   setContent(prevContent => ([ ...copyContent]));
+
+   setContentResume(prevContent => ([ ...copyContentResume]));
+  //  setContentResume(()=>copyContentResume)
   //  Update ContentResume
   console.log("after swap",copyContent)
 
 }
+
 const  onDragStart = (event : any) => {
   console.log('dragstart on div: ', typeof event.target.getAttribute("data-index"));
   event.target.classList.add("bg-green-600")
   event.dataTransfer.setData("index", Number(event.target.getAttribute("data-index")));
 }
+
+// OnDelete Function
+const OnDelete = (index :Number) => { 
+  const copyContent = content
+  const copyContentResume = contentResume
+  copyContent.splice(index,1);
+  copyContentResume.splice(index,1);
+   setContent(prevContent => ([ ...copyContent]));
+
+   setContentResume(prevContent => ([ ...copyContentResume]));
+ }
     return (
         <div className="flex flex-col h-screen flex-1" >
-          <input type="file" onChange={addImage} className="hidden" ref={fileInput} />
+          <input type="file" onChange={addMedia} className="hidden" ref={fileInput} />
              <div className="h-[4rem] shadow bg-white flex px-2 flex-row  justify-between items-center" >
                 {/* Logo */}
         <div className='flex items-center ' > <h1 className='font-bold text-2xl' >ChoseYourCamp</h1><div className='h-2 w-2 self-end bg-blue-600 rounded-full' ></div>  </div>
@@ -168,7 +222,7 @@ const  onDragStart = (event : any) => {
             <div className="w-[30%]  flex-col  p-4 gap-4 flex" >
                 <h2>Choississez votre composant</h2>
                 <div className="flex sticky flex-row flex-wrap gap-4 " >
-                <div className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
+                <div onClick={()=> addTitle()} className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
                       <BiText size={30} />
                     <p className="text-xl text-gray-400" >Titre</p>
                 </div>
@@ -176,11 +230,11 @@ const  onDragStart = (event : any) => {
                       <BiImage size={30} />
                     <p className="text-xl text-gray-400" >Image</p>
                 </div>
-                <div className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
+                <div onClick={()=> addCode()} className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
                       <BsCodeSlash size={30} />
                     <p className="text-xl text-gray-400" >Code</p>
                 </div>
-                <div className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
+                <div onClick={()=> fileInput?.current.click()} className="w-[8rem] border-2 items-center justify-center flex-col flex h-[8rem] shadow-sm cursor-pointer hover:shadow-xl" >
                       <BiVideo size={30} />
                     <p className="text-xl text-gray-400" >Video</p>
                 </div>
@@ -207,7 +261,8 @@ const  onDragStart = (event : any) => {
  <li onDrop={onDrop}  onDragLeave={onDrageLeave} data-index={index} onDragEnter={onDragEnter} onDragOver={onDragOver} onDragStart={onDragStart} draggable key={Math.random()} className="bg-blue-700  h-10 rounded gap-3 flex px-2 items-center" >
       {objectResume[content].Icon}
 
-   <p className="text-white font-semibold " >{objectResume[content].title}</p>
+   <p className="text-white font-semibold flex-1" >{objectResume[content].title}</p>
+   <FaTrash onClick={()=> OnDelete(index)} className="cursor-pointer text-white fill-current hover:text-red-600" />
  </li>
     )) }
    
