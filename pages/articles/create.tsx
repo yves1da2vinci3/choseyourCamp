@@ -18,17 +18,15 @@ import MainSubitle from "@/components/Cms_components/MainSubTitle"
 import { FaTrash } from "react-icons/fa"
 export default function CreateArticle() {
     const [doc, setDoc] = useState<string>('# Hello, World!\n')
-    const handleDocChange = useCallback((newDoc: string) => {
-        // console.log(newDoc)
-      setDoc(newDoc)
-    }, [])
+   
     const route = useRouter()
 
-    const [content,setContent] = useState<any>([<MainTitle  />,<MainSubitle/>      ])
+    const [content,setContent] = useState<any>([<MainTitle  text="entrez votre titre" />,<MainSubitle/>      ])
     const [images,setImages] = useState([])
     const [videos,setvideos] = useState([])
     const [droppableeIndex,setDroppableIndex] = useState(0)
     const [contentResume,setContentResume] = useState(["MainTitle","SubTitle"])
+    const [ValueReferences,setValueReferences] = useState([])
     const addParagraph = () => { 
       const oldContent =content;
       const newContent = [...oldContent,<Paragraph/>]

@@ -35,6 +35,7 @@ export default function Showcase() {
                 <h1 className="text-4xl text-center text-[#616EA6] font-semibold" >Montre au monde de quoi tu es capable!!!</h1>
                 <p className="text-lg text-center text-gray-500 font-semibold" >dans cette partie , il s'agit de voir les travaux des utilisateurs de la plateforme avec la possiblite de voir le code source</p>
                 <p className="text-lg text-center text-gray-500 font-semibold" > <span className="text-blue-500" >100</span>  projets</p>
+                <p className="text-lg text-center text-gray-500 italic font-bold" > Envie de publier ? <span className="text-blue-500" ><Link href="/showcases/create">je publie ici</Link></span>  </p>
                 {/* ShowCase */}
                 <div className="flex-1 flex-wrap flex gap-4 justify-center  p-4"  >
                     <ShowcaseItem/>

@@ -1,16 +1,20 @@
-import React,{FC} from 'react'
+import React,{FC, FormEvent, memo, useEffect, useRef, useState} from 'react'
 
 interface  TextProps {
-    text? : string
+    text : string
 }
 
 
 
 
 const MainTitle: FC<TextProps> = ({ text}) => {
+     const [Text,setText] = useState("")
+    useEffect(()=>{
+      console.log("fuck you all")
+    },[])
     return (
       <>
-        <p contentEditable className='text-4xl outline-none font-semibold font-serif tracking-tighter '>{text ? text : "entrez votre titre"}</p>
+        <p onInput={(e : FormEvent)=> setText(e.target.innerText) }  contentEditable   className='text-4xl outline-none font-semibold font-serif tracking-tighter '>{text}</p>
       </>
     );
   };
