@@ -2,8 +2,7 @@ import { Pagination } from "@mantine/core";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import {FcMenu} from 'react-icons/fc'
-import {BsHeart} from 'react-icons/bs'
-import {FaEye} from 'react-icons/fa'
+
 import ShowcaseItem from "../../components/ShowcaseItem";
 import Link from 'next/link'
 export default function Showcase() {

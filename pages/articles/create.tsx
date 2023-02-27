@@ -16,30 +16,30 @@ import Title from "@/components/Cms_components/Title"
 import MainTitle from "@/components/Cms_components/MainTitle"
 import MainSubitle from "@/components/Cms_components/MainSubTitle"
 import { FaTrash } from "react-icons/fa"
+import { Main } from "next/document"
 export default function CreateArticle() {
     const [doc, setDoc] = useState<string>('# Hello, World!\n')
    
     const route = useRouter()
 
-    const [content,setContent] = useState<any>([<MainTitle  text="entrez votre titre" />,<MainSubitle/>      ])
+    const [content,setContent] = useState<any>(["MainTitle","SubTitle" ])
     const [images,setImages] = useState([])
     const [videos,setvideos] = useState([])
     const [droppableeIndex,setDroppableIndex] = useState(0)
-    const [contentResume,setContentResume] = useState(["MainTitle","SubTitle"])
-    const [ValueReferences,setValueReferences] = useState([])
+    const [contentResume,setContentResume] = useState([{componentName : "MainTitle",Value : ''}, {componentName : "SubTitle",Value : ''}])
     const addParagraph = () => { 
       const oldContent =content;
-      const newContent = [...oldContent,<Paragraph/>]
+      const newContent = [...oldContent,"paragraph"]
       const oldContentResume = contentResume
-      const newContentResume = [...oldContentResume,"paragraph"]
+      const newContentResume = [...oldContentResume,{componentName : "paragraph",Value : ""}]
       setContentResume(newContentResume)
       setContent(newContent)
      }
     const addTitle = () => { 
       const oldContent =content;
-      const newContent = [...oldContent,<Title/>]
+      const newContent = [...oldContent,"Title"]
       const oldContentResume = contentResume
-      const newContentResume = [...oldContentResume,"Title"]
+      const newContentResume = [...oldContentResume,{componentName : "Title",Value : ""}]
       setContentResume(newContentResume)
 
       setContent(newContent)
@@ -48,15 +48,15 @@ export default function CreateArticle() {
     const addMedia = (e : any) => { 
       const oldContent =content;
       if(e.target.files[0].type.startsWith("image/")){
-        const newContent = [...oldContent,<CmsImage imgUrl={URL.createObjectURL(e.target.files[0])} />]
+        const newContent = [...oldContent,"Image"]
         const oldContentResume = contentResume
-        const newContentResume = [...oldContentResume,"Image"]
+        const newContentResume = [...oldContentResume,{componentName : "Image",Value : "",mediaUrl :URL.createObjectURL(e.target.files[0]) }]
         setContentResume(newContentResume)
         setContent(newContent)
       }else{
-        const newContent = [...oldContent,<Video videoUrl={URL.createObjectURL(e.target.files[0])} />]
+        const newContent = [...oldContent,"Video"]
         const oldContentResume = contentResume
-        const newContentResume = [...oldContentResume,"Video"]
+        const newContentResume = [...oldContentResume,{componentName : "Video",Value : "",mediaUrl :URL.createObjectURL(e.target.files[0]) }]
         setContentResume(newContentResume)
         setContent(newContent)
       }
@@ -66,19 +66,19 @@ export default function CreateArticle() {
  const fileInput = useRef(null)
  const addBlock = () => { 
   const oldContent =content;
-  const newContent = [...oldContent,<Block  />]
+  const newContent = [...oldContent,"Block"]
   // Update Resume Content
   const oldContentResume = contentResume
-   const newContentResume = [...oldContentResume,"Block"]
+   const newContentResume = [...oldContentResume,{componentName : "Block",Value : ""}]
    setContentResume(newContentResume)
   setContent(newContent)
  }
  const addCode = () => { 
   const oldContent =content;
-  const newContent = [...oldContent,<Code  />]
+  const newContent = [...oldContent, "Code"]
   // Update Resume Content
   const oldContentResume = contentResume
-   const newContentResume = [...oldContentResume,"Code"]
+   const newContentResume = [...oldContentResume,{componentName : "Code",Value : ""}]
    setContentResume(newContentResume)
   setContent(newContent)
  }
@@ -248,7 +248,41 @@ const OnDelete = (index :Number) => {
             </div>
            
 <div        className="  h-full self-center break-words flex-1 w-[60%] gap-y-6  flex-col flex  p-5 outline-none " >
- {...content}
+ {content.map((content,index)=> {
+  switch (content) {
+    case "MainTitle":
+      return (
+        <MainTitle contentResume={contentResume} index={index} setContentResume={setContentResume}  />
+      );
+    case "SubTitle":
+      return (
+       <MainSubitle contentResume={contentResume} index={index} setContentResume={setContentResume}  />
+      );
+    case "paragraph":
+      return (
+        <Paragraph contentResume={contentResume} index={index} setContentResume={setContentResume}  />
+      );
+    case "Title":
+      return (
+        <Title contentResume={contentResume} index={index} setContentResume={setContentResume}/>
+      );
+    case "Image":
+      return (
+      <CmsImage contentResume={contentResume} index={index} setContentResume={setContentResume} imgUrl={contentResume[index].mediaUrl} />
+      );
+    case "Video":
+      return (
+        <Video contentResume={contentResume} index={index} setContentResume={setContentResume} videoUrl={contentResume[index].mediaUrl} />
+      );
+    case "Code":
+      return (
+        <Code contentResume={contentResume} index={index} setContentResume={setContentResume} videoUrl={contentResume[index].mediaUrl} />
+      );
+   
+    default:
+      return null;
+  }
+ })}
 </div>
 {/* Mapping */}
 <div className="w-[25%] bg-blue-900 flex-col p-3 flex" >
@@ -257,9 +291,9 @@ const OnDelete = (index :Number) => {
   <ul className="list-none gap-y-2 flex-col flex flex-1" >
     { contentResume.map((content,index) => (
  <li onDrop={onDrop}  onDragLeave={onDrageLeave} data-index={index} onDragEnter={onDragEnter} onDragOver={onDragOver} onDragStart={onDragStart} draggable key={Math.random()} className="bg-blue-700  h-10 rounded gap-3 flex px-2 items-center" >
-      {objectResume[content].Icon}
+      {objectResume[content.componentName].Icon}
 
-   <p className="text-white font-semibold flex-1" >{objectResume[content].title}</p>
+   <p className="text-white font-semibold flex-1" >{objectResume[content.componentName].title}</p>
    <FaTrash onClick={()=> OnDelete(index)} className="cursor-pointer text-white fill-current hover:text-red-600" />
  </li>
     )) }
